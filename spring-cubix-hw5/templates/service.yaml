@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "spring-cubix-hw5.fullname" . }}
+  labels:
+    {{- include "spring-cubix-hw5.labels" . | nindent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "spring-cubix-hw5.selectorLabels" . | nindent 4 }}

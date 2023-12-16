@@ -1,0 +1,25 @@
+image:
+  repository: quay.io/drsylent/cubix/block5/homework
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "springboot3native"
+
+ingress:
+  enabled: true
+  hosts:
+    - host: other.cubix.localhost
+      paths:
+        - path: /
+          pathType: Prefix
+
+env:
+- name: SERVER_TOMCAT_THREADS_MAX
+  value: 50
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 100Mi
+  requests:
+    cpu: 100m
+    memory: 100Mi
