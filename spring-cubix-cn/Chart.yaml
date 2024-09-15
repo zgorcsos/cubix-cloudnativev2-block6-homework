@@ -1,6 +1,6 @@
 apiVersion: v2
-name: spring-cubix-hw5
-description: Simple Helm Chart for Spring Boot application deployment for the fifth Homework
+name: spring-cubix-cn
+description: Simple Helm Chart for Spring Boot application deployment for the cloud-native requirement homeworks
 
 type: application
 

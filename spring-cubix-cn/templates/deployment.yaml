@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "spring-cubix-hw5.fullname" . }}
+  name: {{ include "spring-cubix-cn.fullname" . }}
   labels:
-    {{- include "spring-cubix-hw5.labels" . | nindent 4 }}
+    {{- include "spring-cubix-cn.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "spring-cubix-hw5.selectorLabels" . | nindent 6 }}
+      {{- include "spring-cubix-cn.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -16,13 +16,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "spring-cubix-hw5.selectorLabels" . | nindent 8 }}
+        {{- include "spring-cubix-cn.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "spring-cubix-hw5.serviceAccountName" . }}
+      serviceAccountName: {{ include "spring-cubix-cn.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:

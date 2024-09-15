@@ -1,3 +1,3 @@
-# Fifth homework
+# Cloud-native requirements homework 1.
 
-The Helm Chart that you will use is called `spring-cubix-hw5`. Use this for deploying to your cluster.
+The Helm Chart that you will use is called `spring-cubix-cn`. Use this for deploying to your cluster.

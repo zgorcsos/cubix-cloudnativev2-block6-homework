@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "spring-cubix-hw5.name" -}}
+{{- define "spring-cubix-cn.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "spring-cubix-hw5.fullname" -}}
+{{- define "spring-cubix-cn.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "spring-cubix-hw5.chart" -}}
+{{- define "spring-cubix-cn.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "spring-cubix-hw5.labels" -}}
-helm.sh/chart: {{ include "spring-cubix-hw5.chart" . }}
-{{ include "spring-cubix-hw5.selectorLabels" . }}
+{{- define "spring-cubix-cn.labels" -}}
+helm.sh/chart: {{ include "spring-cubix-cn.chart" . }}
+{{ include "spring-cubix-cn.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "spring-cubix-hw5.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "spring-cubix-hw5.name" . }}
+{{- define "spring-cubix-cn.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "spring-cubix-cn.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "spring-cubix-hw5.serviceAccountName" -}}
+{{- define "spring-cubix-cn.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "spring-cubix-hw5.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "spring-cubix-cn.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
