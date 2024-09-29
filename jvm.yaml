@@ -1,5 +1,5 @@
 image:
-  repository: quay.io/drsylent/cubix/block5/homework
+  repository: quay.io/drsylent/cubix/block6v2/homework
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "springboot3"
