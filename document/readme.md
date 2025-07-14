@@ -1,4 +1,13 @@
 # Stattup logok elemzése
+
+## Javítás
+A JVM indulási ideje 12 másodperc, míg a nativ-é 200 msec.
+Ezért a natív alkalamasabb a felhöhöz (rövidebb az indulási ideje.)
+
+Jobb Request-Resaponse filter:
+![filter request/response](./screenshots/filter_request_response.PNG "Request/Response szürő")
+
+
 ### loggingMode: file
 Mivel az alkalamazás ekkor nem a standard outputra logol, így a  spring boot logon kivül más nem jelenik meg a naplóban.
 ![nativ file startup logs](./screenshots/startup_nativ_file.PNG "Nativ file: indulási logok")
