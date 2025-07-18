@@ -62,7 +62,7 @@ spec:
           - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
             value: "health,info,readiness,liveness"
           - name: SPRING_CONFIG_IMPORT
-            value: "file:/opt/app/config/application.properties"
+            value: {{ .Values.spring.configImport | quote }}
           - name: TARGET_API_KEY
             valueFrom:
               secretKeyRef:

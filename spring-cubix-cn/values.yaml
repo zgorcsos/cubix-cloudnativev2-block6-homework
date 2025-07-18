@@ -5,6 +5,9 @@ configMap:
 
 replicaCount: 1
 
+spring:
+  configImport: "file:/opt/app/config/application.properties"
+
 image:
   pullPolicy: Always
 
