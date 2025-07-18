@@ -25,13 +25,26 @@ spec:
       serviceAccountName: {{ include "spring-cubix-cn.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if and .Values.configMap.enabled (eq .Values.configMap.as "file") }}
+      volumes:
+      - name: config
+        configMap:
+          name: {{ include "spring-cubix-cn.fullname" . }}
+      {{- end }}
       containers:
         - name: {{ .Release.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ required "Image must be set in Values" .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if and .Values.configMap.enabled (eq .Values.configMap.as "file") }}
+          volumeMounts:
+          - name: config
+            mountPath: /opt/app/config
+          {{- end }}
           env:
+          #- name: SPRING_CONFIG_LOCATION
+          #  value: "file:/opt/app/config/"          
           - name: JAVA_OPTS
             value: {{ .Values.javaOpts | quote }}
           {{- range .Values.env }}
@@ -44,13 +57,45 @@ spec:
             value: "8080"
           - name: MANAGEMENT_SERVER_PORT
             value: "8081"
+          - name: MANAGEMENT_HEALTH_PROBES_ENABLED
+            value: "true"
+          - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
+            value: "health,info,readiness,liveness"
+          - name: SPRING_CONFIG_IMPORT
+            value: "file:/opt/app/config/application.properties"
+          - name: TARGET_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: cnsecret
+                key: apikey            
           ports:
-            - name: http
-              containerPort: 8080
-              protocol: TCP
-            - name: management
-              containerPort: 8081
-              protocol: TCP
+          - name: http
+            containerPort: {{ .Values.containerPorts.http.port }}
+            protocol: TCP
+          - name: management
+            containerPort: {{ .Values.containerPorts.management.port }}
+            protocol: TCP          
+          startupProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 2
+            periodSeconds: 2
+            timeoutSeconds: 1
+            failureThreshold: 15
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8081
+            periodSeconds: 10
+            failureThreshold: 2
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8081
+            periodSeconds: 5
+            failureThreshold: 1
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
