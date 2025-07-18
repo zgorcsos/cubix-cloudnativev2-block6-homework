@@ -6,9 +6,9 @@ metadata:
     {{- include "spring-cubix-cn.labels" . | nindent 4 }}
 spec:
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+  - name: http
+    port: {{ .Values.service.port }}
+    targetPort: http
+    protocol: TCP
   selector:
     {{- include "spring-cubix-cn.selectorLabels" . | nindent 4 }}
