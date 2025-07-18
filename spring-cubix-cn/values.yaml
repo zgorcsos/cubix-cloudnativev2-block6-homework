@@ -1,3 +1,8 @@
+configMap:
+  enabled: false
+  directory: configuration
+  as: ""
+
 replicaCount: 1
 
 image:
@@ -28,21 +33,33 @@ securityContext: {}
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
+containerPorts:
+  http:
+    port: 8080
+    host: other.cubix.localhost
+  management:
+    port: 8081
+    host: other.cubix.localhost
 
 service:
   port: 8080
+  managementPort: 8081
   type: ClusterIP
 
 ingress:
-  enabled: false
-  className: ""
-  annotations: {}
-  # example configuration
+  enabled: true
   hosts:
-    - host: application.cubix.localhost
+    - host: other.cubix.localhost
       paths:
         - path: /
           pathType: Prefix
+          servicePort: 8080
+          serviceName: default
+        - path: /actuator
+          pathType: Prefix
+          servicePort: 8081
+          serviceName: management
+
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
