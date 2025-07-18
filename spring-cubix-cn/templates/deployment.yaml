@@ -78,7 +78,7 @@ spec:
           startupProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8081
+              port: management
               scheme: HTTP
             initialDelaySeconds: 2
             periodSeconds: 2
@@ -87,13 +87,13 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8081
+              port: management
             periodSeconds: 10
             failureThreshold: 2
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8081
+              port: management
             periodSeconds: 5
             failureThreshold: 1
           resources:
