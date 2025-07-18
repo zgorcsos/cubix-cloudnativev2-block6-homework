@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "spring-cubix-cn.fullname" . }}-mgmt
+  labels:
+    {{- include "spring-cubix-cn.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - name: management
+      port: 8081
+      targetPort: management
+      protocol: TCP
+  selector:
+    {{- include "spring-cubix-cn.selectorLabels" . | nindent 4 }}
