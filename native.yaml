@@ -14,6 +14,9 @@ env:
 - name: SERVER_TOMCAT_THREADS_MAX
   value: 50
 
+openTelemetry:
+  targetUrl: http://tempo.tempo.svc:4317
+
 resources:
   limits:
     cpu: 1000m
