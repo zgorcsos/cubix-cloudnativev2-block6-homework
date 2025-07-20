@@ -60,9 +60,15 @@ spec:
           - name: MANAGEMENT_HEALTH_PROBES_ENABLED
             value: "true"
           - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
-            value: "health,info,readiness,liveness"
+            value: "health,info,readiness,liveness,prometheus"
           - name: SPRING_CONFIG_IMPORT
             value: {{ .Values.spring.configImport | quote }}
+          - name: OTEL_SERVICE_NAME
+            value: {{ include "spring-cubix-cn.fullname" . }}
+          - name: OTEL_EXPORTER_OTLP_ENDPOINT
+            value: {{ required "OpenTelemetry target URL is required!" .Values.openTelemetry.targetUrl }}
+          - name: OTEL_METRICS_EXPORTER
+            value: none
           - name: TARGET_API_KEY
             valueFrom:
               secretKeyRef:
